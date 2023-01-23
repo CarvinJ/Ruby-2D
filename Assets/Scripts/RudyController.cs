@@ -9,6 +9,9 @@ public class RudyController : MonoBehaviour
     public int health { get { return currentHealth; }}
     int currentHealth;
 
+    bool isInvincible;
+    float invincibleTimer;
+
     Rigidbody2D rigidbody2d;
     float horizontal;
     float vertical;
@@ -18,7 +21,7 @@ public class RudyController : MonoBehaviour
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
-        
+        // currentHealth = maxHealth;
     }
 
     // Update is called once per frame
