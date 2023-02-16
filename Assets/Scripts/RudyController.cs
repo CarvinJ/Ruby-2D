@@ -11,6 +11,7 @@ public class RudyController : MonoBehaviour
 
     bool isInvincible;
     float invincibleTimer;
+    float timeInvincible;
 
     Rigidbody2D rigidbody2d;
     float horizontal;
@@ -71,8 +72,17 @@ public class RudyController : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
+        if (amount < 0)
+        {
+            animator.SetTrigger("Hit");
+            if (isInvincible)
+                return;
+
+           isInvincible = true;
+           invincibleTimer = timeInvincible;     
+        }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        Debug.Log(currentHealth + "/" + maxHealth); 
+        UIHealthBar. instance.SetValue(currentHealth  / (float) maxHealth); 
     }
 
     void Launch()
