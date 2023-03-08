@@ -23,8 +23,11 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void OnCollisionEnter2D(Collision2D other)
     {
-      //we also adda a debug log to know what the projectile  
-      Debug.Log("Projecile Collisionwith " + other.gameObject);
+      EnemyController e = other.collider.GetComponent<EnemyController>();
+        if (e != null)
+        {
+            e.Fix();
+        }
       Destroy(gameObject);
     }
     public void Launch(Vector2 direction, float force)
