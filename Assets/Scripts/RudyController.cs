@@ -15,6 +15,7 @@ public class RudyController : MonoBehaviour
 
     Rigidbody2D rigidbody2d;
     float horizontal;
+    public Transform respawnPosition;
     float vertical;
 
     public GameObject projectilePrefab;
@@ -26,6 +27,7 @@ public class RudyController : MonoBehaviour
 
     public AudioClip throwCog;
     public AudioClip playerHit;
+    public AudioClip robotFixed;
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +45,8 @@ public class RudyController : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
         
         Vector2 move = new Vector2(horizontal, vertical);
-        
+
+      
         if(!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
         {
             lookDirection.Set(move.x, move.y);
@@ -80,7 +83,10 @@ public class RudyController : MonoBehaviour
                     
                 }
             }
-
+      if(Input.GetKeyDown(KeyCode.Escape))
+        {
+          Application.Quit();
+        }
 
     }
     private void FixedUpdate()
@@ -106,7 +112,13 @@ public class RudyController : MonoBehaviour
            invincibleTimer = timeInvincible;     
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+
+        if (currentHealth == 0)
+              Respawn();
+              
         UIHealthBar. instance.SetValue(currentHealth  / (float) maxHealth); 
+
+        
     }
 
     void Launch()
@@ -124,7 +136,13 @@ public class RudyController : MonoBehaviour
     {
         audioSource.PlayOneShot(clip);
     }
+     void Respawn()
+     {
 
+         transform.position = respawnPosition.position;
+         currentHealth = maxHealth;
+
+     }
 }
 
  
